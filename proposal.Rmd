@@ -1,0 +1,43 @@
+---
+title: "Proposal"
+author: "Romain  Francois"
+date: "02/02/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Problem
+=======
+
+The success of `Rcpp` (Eddelbuettel and François 2011) is a great testimony of the need within the R 
+community to have solid foundations to use R together with C++. A significant subset of R packages
+use of Rcpp to leverage C++ code, and this extends to a large proportion of packages once
+recursive reverse dependencies are taken into account. 
+
+However ubiquitous, the current implementation of `Rcpp` is maintained with emphasis on interface stability 
+and backwards compatibility against old versions of C++, namely `C++98`. Before the release of `C++11`, the language had been 
+stagnant for a long period of time. Adoption of modern C++ standards (from `C++11`) by compiler providers has 
+taken additional time, and availability of these compilers accross relevant platforms suitable for R development 
+took further time. 
+
+The completed modernization of the `Rtools` suite for windows set an important milestone about 
+availability of modern C++ standards. When developping modern R packages using C++ code, we can now 
+safely assume C++11. Furthermore, transitionning from C++11 to more recent versions should 
+be less of a struggle. 
+
+Backwards compatibility with C++98 may initially perceived as a good feature, but in effect it is
+our belief that it is in fact a curse in disguise. It forces developpers of the R/C++ bridge as well 
+as developpers to dependent packages to maintain code targetting both modern syntax (using features such as lambdas 
+and the `auto` keyword) and outdated C++ idioms. In effect, this leads to conditionnal compiling and 
+therefore code bloat. 
+
+
+References
+==========
+
+Eddelbuettel, Dirk, and Romain François. 2011. “Rcpp: Seamless R and C++ Integration.” *Journal of Statistical Software* 40 (8): 1–18. <http://www.jstatsoft.org/v40/i08/>.
+
+
