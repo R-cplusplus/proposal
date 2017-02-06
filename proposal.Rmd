@@ -127,6 +127,20 @@ It would be replaced by the more R-idiomatic
 NumericVector x = rep(42, n); 
 ```
 
+Plan
+====
+
+Help requested
+==============
+
+Acknowledgements
+================
+
+Dissemination
+============
+
+About the author
+===============
 
 References
 ==========
