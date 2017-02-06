@@ -106,6 +106,28 @@ some code might only use numeric vectors.
 We will look at solutions allowing to extract only the relevant part of the api
 for the target use. 
 
+Code Complexity
+---------------
+
+Some classes in the current implementation of Rcpp suffer from the design as you go
+pattern and expose an overly complicated api. For example, the vector classes
+(e.g. `NumericVector`) have too many constructors. The constructors can avantageaously 
+be replaced by appropriate free functions. 
+
+As an example, to create a numeric vector of size `n` with all values set to `42.0`, we 
+can use this syntax in `Rcpp`  
+
+```
+NumericVector x(n, 42) ;
+```
+
+It would be replaced by the more R-idiomatic 
+
+```
+NumericVector x = rep(42, n); 
+```
+
+
 References
 ==========
 
