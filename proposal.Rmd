@@ -12,10 +12,16 @@ knitr::opts_chunk$set(echo = TRUE)
 Problem
 =======
 
+Need for R/C++ api
+------------------
+
 The success of `Rcpp` (Eddelbuettel and François 2011) is a great testimony of the need within the R 
 community to have solid foundations to use R together with C++. A significant subset of R packages
 use of Rcpp to leverage C++ code, and this extends to a large proportion of packages once
 recursive reverse dependencies are taken into account. 
+
+Towards more recent C++ standards
+---------------------------------
 
 However ubiquitous, the current implementation of `Rcpp` is maintained with emphasis on interface stability 
 and backwards compatibility against old versions of C++, namely `C++98`. Before the release of `C++11`, the language had been 
@@ -34,10 +40,76 @@ as developpers to dependent packages to maintain code targetting both modern syn
 and the `auto` keyword) and outdated C++ idioms. In effect, this leads to conditionnal compiling and 
 therefore code bloat. 
 
+We suggest eliminating this issue altogether by rebasing the R/C++ api codebase on more recent 
+C++ standards. Initially we are interested in C++11 which is now universally available 
+on the platforms of interest for R package development. 
+
+This allows both the api as well as packages using it to take full advantage of modern C++ syntax, 
+leading to better code clarity and concision. For example, large parts of the historic `Rcpp` codebase
+are written by means of automatically generated R code that adds thousands of lines of C++ code, 
+which can be rewritten using variadic templates in much less code.
+
+Runtime dependency
+------------------
+
+The current implementation of the R/C++ api is distributed as an R package containing 
+both header files for api classes (e.g. `NumericVector`) and a runtime library that is either 
+dynamically or statically linked depending on the platform. 
+
+This separation may cause hurdles between the two translation units involved, which makes 
+exception propagation more difficult that it could be. 
+
+Furthermore, the bigger problem is with updates of the api and potential binary 
+incompatibilities. When developping a package that uses `Rcpp`, several versions of the 
+codebase are involved. 
+  - The version of `Rcpp` used by the developper of the package
+  - The version of `Rcpp` on CRAN, used i.e. to compile binary versions of the package
+  - The version of `Rcpp` on the user's machine
+  
+When these 3 versions are the same, everything works fine. When they start to differ, 
+complicated to deal with binary incompatibility problems start to happen. Package developpers
+have used various degrees of safeguards to limit the issue, for example always depend on the 
+latest version of `Rcpp` but this is far from fullproof. 
+
+These issues are hard to find and even harder to deal with. The smallest change in the 
+api can trigger the problem. The maintainers of `Rcpp` are well aware of it, and have chosen
+to deal with it by limiting the number of api changes to a strict minimum, making it
+extremely difficult to let the api evolve, and for example come back on some eearly design 
+mistakes. 
+
+Our envisionned solution to work around this issue is twofold:
+  - The api will exclusively provide header files. 
+  - The api will be distributed in a way that makes it embeddable in the client package. A client 
+    package will consist on original code using headers of the api that will be stored somewhere 
+    within the package
+    
+With these two design conditions, the version of the api used for a package is the same accross 
+all scenarios. The version of the api used on the installed package of some user is the same
+as the version of the api used by the cran package, which is also the same as the version of the 
+api that has been used to develop the package. 
+
+Ugrading to a newer version of the api becomes the responsability of the developper of the 
+client package. This will dramatically reduce binary incompatibility issues. 
+
+This distribution model gives developpers of the R/C++ api much more latitude to make 
+potentially breaking changes, eliminate dead code or simply redesign parts of the api
+that deserve it. 
+
+Modularity
+----------
+
+Currently, when using `Rcpp`, we include all of the code base with `#include <Rcpp.h>`, 
+this pulls in all of the code base, including api classes, sugar and modules. However 
+sometimes only a limited fraction of the codebase is effectively used. For example
+some code might only use numeric vectors. 
+
+We will look at solutions allowing to extract only the relevant part of the api
+for the target use. 
 
 References
 ==========
 
-Eddelbuettel, Dirk, and Romain François. 2011. “Rcpp: Seamless R and C++ Integration.” *Journal of Statistical Software* 40 (8): 1–18. <http://www.jstatsoft.org/v40/i08/>.
+Dirk Eddelbuettel, and Romain François. 2011. “Rcpp: Seamless R and C++ Integration.” *Journal of Statistical Software* 40 (8): 1–18. <http://www.jstatsoft.org/v40/i08/>.
+
 
 
