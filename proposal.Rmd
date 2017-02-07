@@ -29,7 +29,8 @@ stagnant for a long period of time. Adoption of modern C++ standards (from `C++1
 taken additional time, and availability of these compilers accross relevant platforms suitable for R development 
 took further time. 
 
-The completed modernization of the `Rtools` suite for windows set an important milestone about 
+The completed modernization of the `Rtools` (Murdoch, Ligges, Kou, Ushey, Allaire, Adler and Ooms 2016)
+suite for windows set an important milestone about 
 availability of modern C++ standards. When developping modern R packages using C++ code, we can now 
 safely assume C++11. Furthermore, transitionning from C++11 to more recent versions should 
 be less of a struggle. 
@@ -142,10 +143,31 @@ Dissemination
 About the author
 ===============
 
+I have been trained as a statistician at the university in Montpellier, and ISUP in Paris. I have been 
+professionally involved in the R community for more than 10 years, for Mango Solutions between 2006 and 2008, 
+as a freelancer for 8 years, and as a Consulting Datactive for ThinkR since Feb 2017. 
+
+My interest for connecting R and C++ is not new. I have been involved in the development of the current
+solution, originally inspired from the design of `rJava` (Urbanek 2016). Most of the design principles
+on which Rcpp is based now are a legacy of my work in the project between 2011. To this day, my contributions to 
+`Rcpp` still represent more commits than the next two developpers. I am very proud of the work done and its adoption
+by the community. I am also frustrated by some choices that were made, and my main reason for stepping down from the 
+Rcpp core team is that its maintainership is centered on backwards compatibility whereas there is room for
+(perhaps disruptive) innovation and redesign. 
+
+Aside from my consulting and training responsabilities at ThinkR, I have a dedicated portion of my time 
+devoted to the developpment of open source solutions. This project of modernization of the R/C++
+interface is my top priority in that context. Support from the R Consortium will allow me to 
+dedicate more time to the project, and/or hire extra hands. The nature and performance of the R language 
+requires leveraging external compiled languages, C++ was and remains the best candidate and the 
+R community deserves the very best design for a bridge between the two languages. 
+
 References
 ==========
 
-Dirk Eddelbuettel, and Romain François. 2011. “Rcpp: Seamless R and C++ Integration.” *Journal of Statistical Software* 40 (8): 1–18. <http://www.jstatsoft.org/v40/i08/>.
+Dirk Eddelbuettel, and Romain François. 2011. Rcpp: Seamless R and C++ Integration. *Journal of Statistical Software* 40 (8): 1–18. http://www.jstatsoft.org/v40/i08/.
 
+Simon Urbanek (2016). rJava: Low-Level R to Java Interface. R package version 0.9-8. https://CRAN.R-project.org/package=rJava
 
-
+Duncan Murdoch, Uwe Ligges, Qiang Kou, Kevin Ushey, JJ Allaire, Avraham Adler and Jeroen Ooms. 2016.
+Building R for Windows with the new gcc 4.9.3 toolchain. https://github.com/rwinlib/r-base#readme
