@@ -15,9 +15,11 @@ Problem
 Need for R/C++ api
 ------------------
 
+Explanations needed on why there is a need to connect R to C++ --> here (source : advanced R by Hadley ?)
+
 The success of `Rcpp` (Eddelbuettel and François 2011) is a great testimony of the need within the R 
 community to have solid foundations to use R together with C++. A significant subset of R packages
-use of Rcpp to leverage C++ code, and this extends to a large proportion of packages once
+use of `Rcpp` to leverage C++ code, and this extends to a large proportion of packages once
 recursive reverse dependencies are taken into account. 
 
 Towards more recent C++ standards
@@ -75,7 +77,7 @@ latest version of `Rcpp` but this is far from fullproof.
 These issues are hard to find and even harder to deal with. The smallest change in the 
 api can trigger the problem. The maintainers of `Rcpp` are well aware of it, and have chosen
 to deal with it by limiting the number of api changes to a strict minimum, making it
-extremely difficult to let the api evolve, and for example come back on some eearly design 
+extremely difficult to let the api evolve, and for example come back on some early design 
 mistakes. 
 
 Our envisionned solution to work around this issue is twofold:
@@ -110,7 +112,7 @@ for the target use.
 Code Complexity
 ---------------
 
-Some classes in the current implementation of Rcpp suffer from the design as you go
+Some classes in the current implementation of `Rcpp` suffer from the design as you go
 pattern and expose an overly complicated api. For example, the vector classes
 (e.g. `NumericVector`) have too many constructors. The constructors can avantageaously 
 be replaced by appropriate free functions. 
@@ -143,17 +145,17 @@ Dissemination
 ============
 
 The `rstats-cpp` organization has been created on github to host various artifacts from this initiative. Code and 
-documentation will be continusouly uploaded to several repositories within this organization. 
+documentation will be continuously uploaded to several repositories within this organization. 
 
 The nature of the expected distribution of the code (i.e. embedding the api code inside the client package) 
 requires careful selection of a licensing model. It has to be compatible with R package development
 and values supported by the consortium. 
 
-TODO: do we create a specific blog
+TODO: do we create a specific blog => yes
 
 TODO: articles in R journal (other ?). Blog post in the consortium blog. 
 
-TODO: 
+TODO: same strategy as `Rcpp` => keynotes in meetup ? 
 
 About the author
 ===============
@@ -164,17 +166,17 @@ as a freelancer for 8 years, and as a Consulting Datactive for ThinkR since Feb 
 
 My interest for connecting R and C++ is not new. I have been involved in the development of the current
 solution, originally inspired from the design of `rJava` (Urbanek 2016). Most of the design principles
-on which Rcpp is based now are a legacy of my work in the project between 2011. To this day, my contributions to 
+on which `Rcpp` is based now are a legacy of my work in the project between 2011 and ... (?). To this day, my contributions to 
 `Rcpp` still represent more commits than the next two developpers. I am very proud of the work done and its adoption
-by the community. I am also frustrated by some choices that were made, and my main reason for stepping down from the 
-Rcpp core team is that its maintainership is centered on backwards compatibility whereas there is room for
+by the community. I am also frustrated by some choices that were made, and my main reason for stepping down (aside ?) from the 
+`Rcpp` core team is that its maintainership is centered on backwards compatibility whereas there is room for
 (perhaps disruptive) innovation and redesign. 
 
 Aside from my consulting and training responsabilities at ThinkR, I have a dedicated portion of my time 
 devoted to the developpment of open source solutions. This project of modernization of the R/C++
 interface is my top priority in that context. Support from the R Consortium will allow me to 
 dedicate more time to the project, and/or hire extra hands. The nature and performance of the R language 
-requires leveraging external compiled languages, C++ was and remains the best candidate and the 
+requires to leverage external compiled languages, C++ was and remains the best candidate and the 
 R community deserves the very best design for a bridge between the two languages. 
 
 References
