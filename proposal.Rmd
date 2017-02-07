@@ -120,6 +120,11 @@ Plan
 
 TODO: detailed plan
 
+Failure mode and recovery
+-------------------------
+
+TODO: mention the unavoidable competition with the existing solution. 
+
 Help requested
 ==============
 
