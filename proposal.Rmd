@@ -115,30 +115,40 @@ pattern and expose an overly complicated api. For example, the vector classes
 (e.g. `NumericVector`) have too many constructors. The constructors can avantageaously 
 be replaced by appropriate free functions. 
 
-As an example, to create a numeric vector of size `n` with all values set to `42.0`, we 
-can use this syntax in `Rcpp`  
-
-```
-NumericVector x(n, 42) ;
-```
-
-It would be replaced by the more R-idiomatic 
-
-```
-NumericVector x = rep(42, n); 
-```
-
 Plan
 ====
+
+TODO: detailed plan
 
 Help requested
 ==============
 
+I would like to ask for financial support to cover part of the time needed for the design and implementation 
+of this modernized R/C++ api. 
+
+TODO: once the plan is detailed, come up with a $ amount. 
+
 Acknowledgements
 ================
 
+I would like to thank my colleagues Diane Beldame and Vincent Guyader for allowing me to focus some of my work time
+to this project and encouraging me to go forward with this proposal. 
+
 Dissemination
 ============
+
+The `rstats-cpp` organization has been created on github to host various artifacts from this initiative. Code and 
+documentation will be continusouly uploaded to several repositories within this organization. 
+
+The nature of the expected distribution of the code (i.e. embedding the api code inside the client package) 
+requires careful selection of a licensing model. It has to be compatible with R package development
+and values supported by the consortium. 
+
+TODO: do we create a specific blog
+
+TODO: articles in R journal (other ?). Blog post in the consortium blog. 
+
+TODO: 
 
 About the author
 ===============
