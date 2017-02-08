@@ -120,7 +120,112 @@ be replaced by appropriate free functions.
 Plan
 ====
 
-TODO: detailed plan
+The project can be conceptually divided into two parts. 
+
+  - Design and implementation of the api classes
+  - Framework to allow users to include relevant parts of the api into their packages. 
+  
+The two parts are linked, therefore the timeline below can only be a rough estimate. Each 
+week of the timeline represents at most 3 days of work, so at most 24 hours. The amount of work
+effectively dedicated to the project may vary depending on my workload in other projects. 
+
+Week 1-3: Setup
+---------------
+
+  - Publish initial blog post 
+  - Setup discussion channels, probably using a custom slack team
+  - Contact potential interrested parties. I have mentionned my intention to go forward with 
+    this project at various conferences, and some people seemed interrested to transition from `Rcpp`
+    to a more modern implementation. 
+  - Discuss important design decisions. 
+    - The envisionned distribution (as separate components that are 
+      embeddable into client packages) requires design. We don't want users to have to manually 
+      copy and paste files into their project, so we have to find the best way to move the header files 
+      based on what components are used. The solution might involve an R package with functions performing 
+      the relevant copies, or solutions at the git level such as git sub modules or git subtree. 
+    - Where in the source tree of the client package should the api headers be deployed. It is important
+      that these files are isolated from the actual code of the client package. 
+      
+Week 4-6: api class review and design
+-------------------------------------
+
+  - The api aims to be conceptually compatible with `Rcpp`, i.e. each relevant R class gets a 
+    dedicated C++ class, for example numeric vectors are handled by the `NumericVector` class. 
+  - A review of the existing classes is needed to decide the interface. Some interface might be 
+    kept, i.e. constructing a numeric vector by giving it the target size, but some behaviour is
+    likely to need to be updated. 
+  - The deliverable from that step is a set of documents, of a format to be defined, detailing 
+    the classes and their interface. 
+    
+Week 7: Skeleton implementation of a subset
+-------------------------------------------
+
+  - In order to test distribution of the api in the coming weeks, we need to have an 
+    initial subset of the api implemented
+    
+Week 8-9: Formalizing distribution
+----------------------------------
+
+  - This step is critical to the success of the project. If we come up with good classes and
+    interfaces but fail to find ways to use it easily, the project will likely not be a success. 
+  - We will use the api subset implemented on week 5 to test emedding the code into a package, using 
+    the mechanism agreed on earlier. 
+  - This step might lead to reconsider the chosen mechanism. It might not work or be too complicated. 
+    
+Week 10-15: full api implementation
+-----------------------------------
+
+  - Implementation of the api classes designed previously
+  - Iteratively test the embedding as new components are included
+  
+Week 16-18: Sugar
+----------------
+
+  - `Rcpp` sugar is a technology based on expression templates (Veldhuizen 1995) to have a syntax
+    close to R syntax at the C++ level. 
+  - Although it provides syntax comfort, sugar somewhat goes against one of the main message when 
+    moving from R to C++ code, namely that writing loops is fine in C++ and should not 
+    be associated with the same guilty conscience as when using loops in R code. Modern high level 
+    languages such as Julia (Bezanson, Karpinski, Shah and Edelman 20012) even go as far as advocating 
+    for de-vectorizing code and indeed write loops. 
+  - We will need to decide whether sugar should be an integral oart of the new api, or if we should 
+    encourage external contributions to implement the feature as an external component. 
+  - Whether we decide to include sugar or not, we need to lead the way and review the current techniques
+    for modern expression templates. 
+  - With the availability of lambda functions for C++, a minimal sugar implementation might just be
+    constituted of implementations of C++ equivalents to `sapply` and `mapply` 
+    
+Week 17-22: Modules
+-------------------
+
+  - `Rcpp` modules enables use of C++ classes at the R level. It was largely inspired from 
+    the `Boost.Python` (Abrahams 2003) library providing similar (although more complete) features for python. 
+  - Modules were very hard to develop with the C++98 standard, therefore the code is bloated. 
+  - We need to revise underlying technologies based on more modern C++ syntax, i.e. variadic templates are likely 
+    to play a part. 
+  - `RcppR6` (FitzJohn, 2015) has been developped as an alternative to modules. We need to review the solution, 
+    identify what problems it solves that modules don't, encourage a discussion with its author. 
+
+Week 23-24: Documentation
+-------------------------
+
+  - Documentation will be kept in mind as a background thread during the whole project, but this phase
+    will be dedicated to it. 
+  - Blog post, and potentially article in the R Journal or similar venue about the solution. 
+  - Blog post detailing migration to the modernized version. 
+
+Week 25-26: Stress Test
+-----------------------
+
+  - Dedicate time specifially for testing, this is in addition to the testing that will also be added 
+    during all other phases. 
+
+Week 27-30: Dissemination
+-------------------------
+  
+  - Contact potential consumers of R/C++ api and encourage them to test the solution
+  - Allow time to fix issues
+  - Release to CRAN (if appropriate) or at least some venue that allows use by other packages. 
 
 Failure mode and recovery
 -------------------------
@@ -182,9 +287,17 @@ R community deserves the very best design for a bridge between the two languages
 References
 ==========
 
-Dirk Eddelbuettel, and Romain François. 2011. Rcpp: Seamless R and C++ Integration. *Journal of Statistical Software* 40 (8): 1–18. http://www.jstatsoft.org/v40/i08/.
+David Abrahams. 2003. Building Hybrid Systems with Boost.Python. http://www.boost.org/doc/libs/1_63_0/libs/python/doc/html/article.html
 
-Simon Urbanek (2016). rJava: Low-Level R to Java Interface. R package version 0.9-8. https://CRAN.R-project.org/package=rJava
+Dirk Eddelbuettel, and Romain François. 2011. Rcpp: Seamless R and C++ Integration. *Journal of Statistical Software* 40 (8): 1–18. http://www.jstatsoft.org/v40/i08/.
 
 Duncan Murdoch, Uwe Ligges, Qiang Kou, Kevin Ushey, JJ Allaire, Avraham Adler and Jeroen Ooms. 2016.
 Building R for Windows with the new gcc 4.9.3 toolchain. https://github.com/rwinlib/r-base#readme
+
+Simon Urbanek. 2016. rJava: Low-Level R to Java Interface. R package version 0.9-8. https://CRAN.R-project.org/package=rJava
+
+Todd Veldhuizen. 1995. Expression templates. C++ Report, Vol 7 No. 5. https://web.archive.org/web/20050210090012/http://osl.iu.edu/~tveldhui/papers/Expression-Templates/exprtmpl.html
+
+Jeff Bezanson, Stefan Karpinski, Viral B. Shah, Alan Edelman. 2012. Julia: A fast dynamic language for technical computing. https://arxiv.org/abs/1209.5145
+
+Rich FitzJohn. 2015. Code-generation Wrapping C++ Classes as R6 Classes. 
