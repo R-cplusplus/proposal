@@ -123,6 +123,14 @@ pattern and expose an overly complicated api. For example, the vector classes
 (e.g. `NumericVector`) have too many constructors. The constructors can avantageaously 
 be replaced by appropriate free functions. 
 
+Another side effect of the code complexity is compile time. Compiling a package against `Rcpp`
+takes too much time. I believe that this time can be dramatically reduced by this approach. 
+Furthermore, this approach will also reduce continuous integration time. At the moment, 
+travis (or similar continuous integration systems) need to first build `Rcpp`, which takes 
+too much time, some of which being used to build components of `Rcpp` that are not relevant 
+to the target package. Embedding the relevant subset of the codebase within the package
+takes care of this. 
+
 Plan
 ====
 
