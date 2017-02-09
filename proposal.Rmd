@@ -268,6 +268,18 @@ I would like to ask for financial support to cover part of the time needed for t
 of this modernized R/C++ api, and cover costs for attending a major conference such as useR and/or some 
 meetups to spread the word. 
 
+Budget Plan
+===========
+
+Thanks to other projects (e.g. `r-hub`) and available infrastructure, we do not envision 
+hardware costs. The code will be developped on our machines and tested accross `r-hub`, `travis`, ...
+
+Documentation can be hosted as github pages. We might want to register a specific domain name 
+for the blog and documentation, but the cost in negligible.  
+
+What we really need is time, and therefore financial support to sponsor that time. The estimated 
+timeline aboves sums up to 720 hours of development time. This represents $72,000.
+
 Acknowledgements
 ================
 
