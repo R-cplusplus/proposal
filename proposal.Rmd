@@ -277,8 +277,10 @@ hardware costs. The code will be developped on our machines and tested accross `
 Documentation can be hosted as github pages. We might want to register a specific domain name 
 for the blog and documentation, but the cost in negligible.  
 
-What we really need is time, and therefore financial support to sponsor that time. The estimated 
-timeline aboves sums up to 720 hours of development time. This represents $72,000.
+What the project really needs is time, and therefore financial support to sponsor that time. The estimated timeline
+above represents 3 days a week during 30 weeks. ThinkR will cover one day of work per week allocated to 
+this project. I would like to ask the consortium for financial support for $48,000 to cover the remaining 480 hours
+of development time. 
 
 Acknowledgements
 ================
