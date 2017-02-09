@@ -20,7 +20,6 @@ Need for R/C++ api
 
 R is a great and flexible language for statistics and data analysis, but it sometimes lack
 performance.
-**Is there a source somewhere that affirms that this is not the priority of the R-Core team ?**
 Connecting R with an high performance language such as C++ is a great 
 compromise allowing us to keep using R and yet have access to better performance
 on critical parts of the code. 
@@ -314,12 +313,9 @@ as a freelancer for 8 years, and as a Consulting Datactive for ThinkR since Feb 
 in 221B Baker Street, however we are based in France, where every street is Baker Street. 
 
 My interest for connecting R and C++ is not new. I have been involved in the development of the current
-solution, originally inspired from the design of `rJava` (Urbanek 2016). Most of the design principles
-on which `Rcpp` is based now are a legacy of my work in the project between 2010 and 2014. To this day, my contributions to 
-`Rcpp` still represent more commits than the next two developpers. I am very proud of the work done and its adoption
-by the community. I am also frustrated by some choices that were made, and my main reason for stepping down from the 
-`Rcpp` core team is that its maintainership is centered on backwards compatibility whereas there is room for
-(perhaps disruptive) innovation and redesign. 
+solution, originally inspired from the design of `rJava` (Urbanek 2016). I have been heavily involved 
+in designing the fundamental principles of what `Rcpp` is now. Nowadays its maintainership is centered on backwards 
+compatibility whereas there is room for (perhaps disruptive) innovation and redesign. 
 
 Aside from my consulting and training responsabilities at ThinkR, I have a dedicated portion of my time 
 devoted to the developpment of open source solutions. This project of modernization of the R/C++
