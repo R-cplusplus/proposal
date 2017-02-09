@@ -12,10 +12,16 @@ knitr::opts_chunk$set(echo = TRUE)
 Problem
 =======
 
+This is a proposal for a modernized version of the R/C++ bridge based on more modern
+approaches. 
+
 Need for R/C++ api
 ------------------
 
-Explanations needed on why there is a need to connect R to C++ --> here (source : advanced R by Hadley ?)
+R is a great and flexible language for statistics and data analysis, but it sometimes lack
+performance. Connecting R with an high performance language such as C++ is a great 
+compromise allowing us to keep using R and yet have access to better performance
+on critical parts of the code. 
 
 The success of `Rcpp` (Eddelbuettel and François 2011) is a great testimony of the need within the R 
 community to have solid foundations to use R together with C++. A significant subset of R packages
@@ -186,7 +192,7 @@ Week 16-18: Sugar
   - Although it provides syntax comfort, sugar somewhat goes against one of the main message when 
     moving from R to C++ code, namely that writing loops is fine in C++ and should not 
     be associated with the same guilty conscience as when using loops in R code. Modern high level 
-    languages such as Julia (Bezanson, Karpinski, Shah and Edelman 20012) even go as far as advocating 
+    languages such as Julia (Bezanson, Karpinski, Shah and Edelman 2012) even go as far as advocating 
     for de-vectorizing code and indeed write loops. 
   - We will need to decide whether sugar should be an integral oart of the new api, or if we should 
     encourage external contributions to implement the feature as an external component. 
@@ -230,15 +236,29 @@ Week 27-30: Dissemination
 Failure mode and recovery
 -------------------------
 
-TODO: mention the unavoidable competition with the existing solution. 
+The elephant in the room is the existence of `Rcpp`. I absolutely don't see this 
+initiative as a competition against `Rcpp`. I have great respect for the work 
+that is done by the maintainers and I am still very proud of what `Rcpp`has become. 
+The extreme care for stability is the absolute 
+priority of `Rcpp` and that's great. This however limits innovation and redesign. I strongly 
+believe that there is room for both and that the approach described here offers a better
+compromise between statbility and innovation. 
+
+Success of the project will depend on the willingness of package authors to 
+consider using the new api. To maximise probability of success, we must have good 
+documentation highlighting key differences and advantages of the new api. 
+
+The most important part, and the one we must absolutely get right, is the distribution of 
+the code. It should be simple enough so that it does not get in the way. It should be easy 
+to switch from one version of the api to another. Doing this right reduces the risk 
+of packages using old version of the code base for wrong reasons. 
 
 Help requested
 ==============
 
 I would like to ask for financial support to cover part of the time needed for the design and implementation 
-of this modernized R/C++ api. 
-
-TODO: once the plan is detailed, come up with a $ amount. 
+of this modernized R/C++ api, and cover costs for attending a major conference such as useR and/or some 
+meetups to spread the word. 
 
 Acknowledgements
 ================
@@ -247,7 +267,7 @@ I would like to thank my colleagues Diane Beldame and Vincent Guyader for allowi
 to this project and encouraging me to go forward with this proposal. 
 
 Dissemination
-============
+=============
 
 The `rstats-cpp` organization has been created on github to host various artifacts from this initiative. Code and 
 documentation will be continuously uploaded to several repositories within this organization. 
@@ -256,24 +276,25 @@ The nature of the expected distribution of the code (i.e. embedding the api code
 requires careful selection of a licensing model. It has to be compatible with R package development
 and values supported by the consortium. 
 
-TODO: do we create a specific blog => yes
+In addition to blog posts on the consortium blog and article in a venue such as the R Journal for broad exposure, 
+it makes sense to have a dedicated blog to document progress or highlight specific features being developped. We probably 
+use hugo (https://gohugo.io) over github pages to host the blog. 
 
-TODO: articles in R journal (other ?). Blog post in the consortium blog. 
-
-TODO: same strategy as `Rcpp` => keynotes in meetup ? 
+The project will ideally also need to be presented in major R conferences and meetups. 
 
 About the author
 ===============
 
 I have been trained as a statistician at the university in Montpellier, and ISUP in Paris. I have been 
 professionally involved in the R community for more than 10 years, for Mango Solutions between 2006 and 2008, 
-as a freelancer for 8 years, and as a Consulting Datactive for ThinkR since Feb 2017. 
+as a freelancer for 8 years, and as a Consulting Datactive for ThinkR since Feb 2017. We are not based 
+in 221B Baker Street, however we are based in France, where every street is Baker Street. 
 
 My interest for connecting R and C++ is not new. I have been involved in the development of the current
 solution, originally inspired from the design of `rJava` (Urbanek 2016). Most of the design principles
-on which `Rcpp` is based now are a legacy of my work in the project between 2011 and ... (?). To this day, my contributions to 
+on which `Rcpp` is based now are a legacy of my work in the project between 2010 and 2014. To this day, my contributions to 
 `Rcpp` still represent more commits than the next two developpers. I am very proud of the work done and its adoption
-by the community. I am also frustrated by some choices that were made, and my main reason for stepping down (aside ?) from the 
+by the community. I am also frustrated by some choices that were made, and my main reason for stepping down from the 
 `Rcpp` core team is that its maintainership is centered on backwards compatibility whereas there is room for
 (perhaps disruptive) innovation and redesign. 
 
