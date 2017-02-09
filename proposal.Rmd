@@ -289,7 +289,11 @@ References
 
 David Abrahams. 2003. Building Hybrid Systems with Boost.Python. http://www.boost.org/doc/libs/1_63_0/libs/python/doc/html/article.html
 
+Jeff Bezanson, Stefan Karpinski, Viral B. Shah, Alan Edelman. 2012. Julia: A fast dynamic language for technical computing. https://arxiv.org/abs/1209.5145
+
 Dirk Eddelbuettel, and Romain François. 2011. Rcpp: Seamless R and C++ Integration. *Journal of Statistical Software* 40 (8): 1–18. http://www.jstatsoft.org/v40/i08/.
+
+Rich FitzJohn. 2015. Code-generation Wrapping C++ Classes as R6 Classes. 
 
 Duncan Murdoch, Uwe Ligges, Qiang Kou, Kevin Ushey, JJ Allaire, Avraham Adler and Jeroen Ooms. 2016.
 Building R for Windows with the new gcc 4.9.3 toolchain. https://github.com/rwinlib/r-base#readme
@@ -297,7 +301,3 @@ Building R for Windows with the new gcc 4.9.3 toolchain. https://github.com/rwin
 Simon Urbanek. 2016. rJava: Low-Level R to Java Interface. R package version 0.9-8. https://CRAN.R-project.org/package=rJava
 
 Todd Veldhuizen. 1995. Expression templates. C++ Report, Vol 7 No. 5. https://web.archive.org/web/20050210090012/http://osl.iu.edu/~tveldhui/papers/Expression-Templates/exprtmpl.html
-
-Jeff Bezanson, Stefan Karpinski, Viral B. Shah, Alan Edelman. 2012. Julia: A fast dynamic language for technical computing. https://arxiv.org/abs/1209.5145
-
-Rich FitzJohn. 2015. Code-generation Wrapping C++ Classes as R6 Classes. 
