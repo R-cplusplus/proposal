@@ -15,7 +15,7 @@ Problem
 This is a proposal for a modernized version of the R/C++ bridge based on more modern
 approaches. 
 
-Need for R/C++ api
+Need for R/C++ API
 ------------------
 
 R is a great and flexible language for statistics and data analysis, but it sometimes lack
@@ -35,28 +35,28 @@ Towards more recent C++ standards
 However ubiquitous, the current implementation of `Rcpp` is maintained with emphasis on interface stability 
 and backwards compatibility against old versions of C++, namely `C++98`. Before the release of `C++11`, the language had been 
 stagnant for a long period of time. Adoption of modern C++ standards (from `C++11`) by compiler providers has 
-taken additional time, and availability of these compilers accross relevant platforms suitable for R development 
+taken additional time, and availability of these compilers across relevant platforms suitable for R development 
 took further time. 
 
 The completed modernization of the `Rtools` (Murdoch, Ligges, Kou, Ushey, Allaire, Adler and Ooms 2016)
 suite for windows set an important milestone about 
-availability of modern C++ standards. When developping modern R packages using C++ code, we can now 
-safely assume C++11. Furthermore, transitionning from C++11 to more recent versions should 
+availability of modern C++ standards. When developing modern R packages using C++ code, we can now 
+safely assume C++11. Furthermore, transitioning from C++11 to more recent versions should 
 be less of a struggle. There are still some platforms that don't provide native support for modern standards, 
 but compilers can generally be installed as opt-in compilers, and I don't think it is a good idea 
-to allow our community to be taken hostage 
+to allow our community to be taken hostage in the past. 
 
 Backwards compatibility with C++98 may initially perceived as a good feature, but in effect it is
-our belief that it is in fact a curse in disguise. It forces developpers of the R/C++ bridge as well 
-as developpers to dependent packages to maintain code targetting both modern syntax (using features such as lambdas 
-and the `auto` keyword) and outdated C++ idioms. In effect, this leads to conditionnal compiling and 
+our belief that it is in fact a curse in disguise. It forces developers of the R/C++ bridge as well 
+as developers to dependent packages to maintain code targeting both modern syntax (using features such as lambdas 
+and the `auto` keyword) and outdated C++ idioms. In effect, this leads to conditional compiling and 
 therefore code bloat. 
 
-We suggest eliminating this issue altogether by rebasing the R/C++ api codebase on more recent 
+We suggest eliminating this issue altogether by rebasing the R/C++ API codebase on more recent 
 C++ standards. Initially we are interested in C++11 which is now universally available 
 on the platforms of interest for R package development. 
 
-This allows both the api as well as packages using it to take full advantage of modern C++ syntax, 
+This allows both the API as well as packages using it to take full advantage of modern C++ syntax, 
 leading to better code clarity and concision. For example, large parts of the historic `Rcpp` codebase
 are written by means of automatically generated R code that adds thousands of lines of C++ code, 
 which can be rewritten using variadic templates in much less code.
@@ -64,72 +64,72 @@ which can be rewritten using variadic templates in much less code.
 Runtime dependency
 ------------------
 
-The current implementation of the R/C++ api is distributed as an R package containing 
-both header files for api classes (e.g. `NumericVector`) and a runtime library that is either 
+The current implementation of the R/C++ API is distributed as an R package containing 
+both header files for API classes (e.g. `NumericVector`) and a runtime library that is either 
 dynamically or statically linked depending on the platform. 
 
 This separation may cause hurdles between the two translation units involved, which makes 
 exception propagation more difficult that it could be. 
 
-Furthermore, the bigger problem is with updates of the api and potential binary 
-incompatibilities. When developping a package that uses `Rcpp`, several versions of the 
+Furthermore, the bigger problem is with updates of the API and potential binary 
+incompatibilities. When developing a package that uses `Rcpp`, several versions of the 
 codebase are involved. 
-  - The version of `Rcpp` used by the developper of the package
+  - The version of `Rcpp` used by the developer of the package
   - The version of `Rcpp` on CRAN, used i.e. to compile binary versions of the package
   - The version of `Rcpp` on the user's machine
   
 When these 3 versions are the same, everything works fine. When they start to differ, dealing with  
-complicated binary incompatibility problems start to happen. Package developpers
+complicated binary incompatibility problems start to happen. Package developers
 have used various degrees of safeguards to limit the issue, for example always depend on the 
-latest version of `Rcpp` but this is far from fullproof. 
+latest version of `Rcpp` but this is far from full proof. 
 
 These issues are hard to find and even harder to deal with. The smallest change in the 
-api can trigger the problem. The maintainers of `Rcpp` are well aware of it, and have chosen
-to deal with it by limiting the number of api changes to a strict minimum, making it
-extremely difficult to let the api evolve, and for example come back on some early design 
+API can trigger the problem. The maintainers of `Rcpp` are well aware of it, and have chosen
+to deal with it by limiting the number of API changes to a strict minimum, making it
+extremely difficult to let the API evolve, and for example come back on some early design 
 mistakes. 
 
-Our envisionned solution to work around this issue is twofold:
-  - The api will exclusively provide header files. 
-  - The api will be distributed in a way that makes it embeddable in the client package. A client 
-    package will consist on original code using headers of the api that will be stored somewhere 
+Our envisioned solution to work around this issue is twofold:
+  - The API will exclusively provide header files. 
+  - The API will be distributed in a way that makes it embeddable in the client package. A client 
+    package will consist on original code using headers of the API that will be stored somewhere 
     within the package
     
-With these two design conditions, the version of the api used for a package is the same accross 
-all scenarios. The version of the api used on the installed package of some user is the same
-as the version of the api used by the cran package, which is also the same as the version of the 
-api that has been used to develop the package. 
+With these two design conditions, the version of the API used for a package is the same across 
+all scenarios. The version of the API used on the installed package of some user is the same
+as the version of the API used by the cran package, which is also the same as the version of the 
+API that has been used to develop the package. 
 
-Ugrading to a newer version of the api becomes the responsability of the developper of the 
+Ugrading to a newer version of the API becomes the responsibility of the developer of the 
 client package. This will dramatically reduce binary incompatibility issues. 
 
-This distribution model gives developpers of the R/C++ api much more latitude to make 
-potentially breaking changes, eliminate dead code or simply redesign parts of the api
+This distribution model gives developers of the R/C++ API much more latitude to make 
+potentially breaking changes, eliminate dead code or simply redesign parts of the API
 that deserve it. 
 
 Modularity
 ----------
 
 Currently, when using `Rcpp`, we include all of the code base with `#include <Rcpp.h>`, 
-this pulls in all of the code base, including api classes, sugar and modules. However 
+this pulls in all of the code base, including API classes, sugar and modules. However 
 sometimes only a limited fraction of the codebase is effectively used. For example
 some code might only use numeric vectors. 
 
-We will look at solutions allowing to extract only the relevant part of the api
+We will look at solutions allowing to extract only the relevant part of the API
 for the target use. 
 
 Code Complexity
 ---------------
 
 Some classes in the current implementation of `Rcpp` suffer from the design as you go
-pattern and expose an overly complicated api. For example, the vector classes
-(e.g. `NumericVector`) have too many constructors. The constructors can avantageaously 
+pattern and expose an overly complicated API. For example, the vector classes
+(e.g. `NumericVector`) have too many constructors. The constructors can advantageously 
 be replaced by appropriate free functions. 
 
 Another side effect of the code complexity is compile time. Compiling a package against `Rcpp`
 takes too much time. I believe that this time can be dramatically reduced by this approach. 
 Furthermore, this approach will also reduce continuous integration time. At the moment, 
-travis (or similar continuous integration systems) need to first build `Rcpp`, which takes 
+Travis (or similar continuous integration systems) need to first build `Rcpp`, which takes 
 too much time, some of which being used to build components of `Rcpp` that are not relevant 
 to the target package. Embedding the relevant subset of the codebase within the package
 takes care of this. 
@@ -140,8 +140,8 @@ Plan
 
 The project can be conceptually divided into two parts. 
 
-  - Design and implementation of the api classes
-  - Framework to allow users to include relevant parts of the api into their packages. 
+  - Design and implementation of the API classes
+  - Framework to allow users to include relevant parts of the API into their packages. 
   
 The two parts are linked, therefore the timeline below can only be a rough estimate. Each 
 week of the timeline represents at most 3 days of work, so at most 24 hours. The amount of work
@@ -152,25 +152,25 @@ Week 1-3: Setup
 
   - Publish initial blog post 
   - Setup discussion channels, probably using a custom slack team
-  - Contact potential interrested parties. I have mentionned my intention to go forward with 
-    this project at various conferences, and some people seemed interrested to transition from `Rcpp`
+  - Contact potential interested parties. I have mentioned my intention to go forward with 
+    this project at various conferences, and some people seemed interested to transition from `Rcpp`
     to a more modern implementation. 
   - Discuss important design decisions. 
-    - The envisionned distribution (as separate components that are 
-      embeddable into client packages) requires design. We don't want users to have to manually 
+    - The envisioned distribution (as separate components that are 
+      embedded into client packages) requires design. We don't want users to have to manually 
       copy and paste files into their project, so we have to find the best way to move the header files 
       based on what components are used. The solution might involve an R package with functions performing 
-      the relevant copies, or solutions at the git level such as git sub modules or git subtree. 
-    - Where in the source tree of the client package should the api headers be deployed. It is important
+      the relevant copies, or solutions at the git level such as git sub modules or git sub trees. 
+    - Where in the source tree of the client package should the API headers be deployed. It is important
       that these files are isolated from the actual code of the client package. 
       
-Week 4-6: api class review and design
+Week 4-6: API class review and design
 -------------------------------------
 
-  - The api aims to be conceptually compatible with `Rcpp`, i.e. each relevant R class gets a 
+  - The API aims to be conceptually compatible with `Rcpp`, i.e. each relevant R class gets a 
     dedicated C++ class, for example numeric vectors are handled by the `NumericVector` class. 
   - A review of the existing classes is needed to decide the interface. Some interface might be 
-    kept, i.e. constructing a numeric vector by giving it the target size, but some behaviour is
+    kept, i.e. constructing a numeric vector by giving it the target size, but some behavior is
     likely to need to be updated. 
   - The deliverable from that step is a set of documents, of a format to be defined, detailing 
     the classes and their interface. 
@@ -178,22 +178,22 @@ Week 4-6: api class review and design
 Week 7: Skeleton implementation of a subset
 -------------------------------------------
 
-  - In order to test distribution of the api in the coming weeks, we need to have an 
-    initial subset of the api implemented
+  - In order to test distribution of the API in the coming weeks, we need to have an 
+    initial subset of the API implemented
     
 Week 8-9: Formalizing distribution
 ----------------------------------
 
   - This step is critical to the success of the project. If we come up with good classes and
     interfaces but fail to find ways to use it easily, the project will likely not be a success. 
-  - We will use the api subset implemented on week 5 to test emedding the code into a package, using 
+  - We will use the API subset implemented on week 5 to test embedding the code into a package, using 
     the mechanism agreed on earlier. 
   - This step might lead to reconsider the chosen mechanism. It might not work or be too complicated. 
     
-Week 10-15: full api implementation
+Week 10-15: full API implementation
 -----------------------------------
 
-  - Implementation of the api classes designed previously
+  - Implementation of the API classes designed previously
   - Iteratively test the embedding as new components are included
   
 Week 16-18: Sugar
@@ -206,7 +206,7 @@ Week 16-18: Sugar
     be associated with the same guilty conscience as when using loops in R code. Modern high level 
     languages such as Julia (Bezanson, Karpinski, Shah and Edelman 2012) even go as far as advocating 
     for de-vectorizing code and indeed write loops. 
-  - We will need to decide whether sugar should be an integral oart of the new api, or if we should 
+  - We will need to decide whether sugar should be an integral part of the new API, or if we should 
     encourage external contributions to implement the feature as an external component. 
   - Whether we decide to include sugar or not, we need to lead the way and review the current techniques
     for modern expression templates. 
@@ -221,7 +221,7 @@ Week 17-22: Modules
   - Modules were very hard to develop with the C++98 standard, therefore the code is bloated. 
   - We need to revise underlying technologies based on more modern C++ syntax, i.e. variadic templates are likely 
     to play a part. 
-  - `RcppR6` (FitzJohn, 2015) has been developped as an alternative to modules. We need to review the solution, 
+  - `RcppR6` (FitzJohn, 2015) has been developed as an alternative to modules. We need to review the solution, 
     identify what problems it solves that modules don't, encourage a discussion with its author. 
 
 Week 23-24: Documentation
@@ -235,13 +235,13 @@ Week 23-24: Documentation
 Week 25-26: Stress Test
 -----------------------
 
-  - Dedicate time specifially for testing, this is in addition to the testing that will also be added 
+  - Dedicate time specifically for testing, this is in addition to the testing that will also be added 
     during all other phases. 
 
 Week 27-30: Dissemination
 -------------------------
   
-  - Contact potential consumers of R/C++ api and encourage them to test the solution
+  - Contact potential consumers of R/C++ API and encourage them to test the solution
   - Allow time to fix issues
   - Release to CRAN (if appropriate) or at least some venue that allows use by other packages. 
 
@@ -257,33 +257,33 @@ believe that there is room for both and that the approach described here offers 
 compromise between stability and innovation. 
 
 Success of the project will depend on the willingness of package authors to 
-consider using the new api. To maximise probability of success, we must have good 
-documentation highlighting key differences and advantages of the new api. 
+consider using the new API. To maximize probability of success, we must have good 
+documentation highlighting key differences and advantages of the new API. 
 
 The most important part, and the one we must absolutely get right, is the distribution of 
 the code. It should be simple enough so that it does not get in the way. It should be easy 
-to switch from one version of the api to another. Doing this right reduces the risk 
+to switch from one version of the API to another. Doing this right reduces the risk 
 of packages using old version of the code base for wrong reasons. 
 
-Because the api will be redesigned, we cannot guarantee compatibility with the existing `Rcpp` interface, 
-transitionning from one implementation to the other will have to be based on documentation of
+Because the API will be redesigned, we cannot guarantee compatibility with the existing `Rcpp` interface, 
+transitioning from one implementation to the other will have to be based on documentation of
 differences. Furthermore we cannot guarantee, at least in the project's infancy 
-full compatibility between different versions. We aim to achieve flextability, i.e. a comprimse
+full compatibility between different versions. We aim to achieve flextability, i.e. a compromise
 between flexibility and stability. However, with the embedding design, package authors are not forced to upgrade, 
-they can keep the version of the api they've tested against. 
+they can keep the version of the API they've tested against. 
 
 Help requested
 ==============
 
 I would like to ask for financial support to cover part of the time needed for the design and implementation 
-of this modernized R/C++ api, and cover costs for attending a major conference such as useR and/or some 
+of this modernized R/C++ API, and cover costs for attending a major conference such as useR and/or some 
 meetups to spread the word. 
 
 Budget Plan
 ===========
 
 Thanks to other projects (e.g. `r-hub`) and available infrastructure, we do not envision 
-hardware costs. The code will be developped on our machines and tested accross `r-hub`, `travis`, ...
+hardware costs. The code will be developed on our machines and tested across `r-hub`, `travis`, ...
 
 Documentation can be hosted as github pages. We might want to register a specific domain name 
 for the blog and documentation, but the cost in negligible.  
@@ -307,12 +307,12 @@ Dissemination
 The `rstats-cpp` organization has been created on github to host various artifacts from this initiative. Code and 
 documentation will be continuously uploaded to several repositories within this organization. 
 
-The nature of the expected distribution of the code (i.e. embedding the api code inside the client package) 
+The nature of the expected distribution of the code (i.e. embedding the API code inside the client package) 
 requires careful selection of a licensing model. It has to be compatible with R package development
 and values supported by the consortium. 
 
 In addition to blog posts on the consortium blog and article in a venue such as the R Journal for broad exposure, 
-it makes sense to have a dedicated blog to document progress or highlight specific features being developped. We'll probably 
+it makes sense to have a dedicated blog to document progress or highlight specific features being developed. We'll probably 
 use hugo (https://gohugo.io) over github pages to host the blog. 
 
 The project will ideally also need to be presented in major R conferences and meetups. 
@@ -332,8 +332,8 @@ the Rcpp Core Team. I however believe that there is room for (perhaps disruptive
 As an author of `Rcpp` and one of its top historical contributors, I can leverage my experience and knowledge 
 to design the next generation of an R/C++ bridge. 
 
-Aside from my consulting and training responsabilities at ThinkR, I have a dedicated portion of my time 
-devoted to the developpment of open source solutions. This project of modernization of the R/C++
+Aside from my consulting and training responsibilities at ThinkR, I have a dedicated portion of my time 
+devoted to the development of open source solutions. This project of modernization of the R/C++
 interface is my top priority in that context. Support from the R Consortium will allow me to 
 dedicate more time to the project, and/or hire extra hands. The nature and performance of the R language 
 requires to leverage external compiled languages, C++ was and remains the best candidate and the 
