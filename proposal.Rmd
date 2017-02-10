@@ -1,6 +1,6 @@
 ---
-title: "Proposal"
-author: "Romain  Francois"
+title: "Rcpp1x Proposal"
+author: "Romain François"
 date: "02/02/2017"
 output: pdf_document
 ---
