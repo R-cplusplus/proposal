@@ -134,6 +134,12 @@ too much time, some of which being used to build components of `Rcpp` that are n
 to the target package. Embedding the relevant subset of the codebase within the package
 takes care of this. 
 
+Legacy work
+-----------
+
+To some extent, project might be perceived as a follow up to the initial implementation effort in `Rcpp11` 
+(François, Ushey and Chambers. 2014). This project is more ambitious than `Rcpp11` was, and it is more 
+likely to be a success because now the tools area ready. 
 
 Plan
 ====
@@ -279,6 +285,8 @@ I would like to ask for financial support to cover part of the time needed for t
 of this modernized R/C++ API, and cover costs for attending a major conference such as useR and/or some 
 meetups to spread the word. 
 
+Help in choosing the right licensing model for this project would also be very valuable. 
+
 Budget Plan
 ===========
 
@@ -309,7 +317,8 @@ documentation will be continuously uploaded to several repositories within this 
 
 The nature of the expected distribution of the code (i.e. embedding the API code inside the client package) 
 requires careful selection of a licensing model. It has to be compatible with R package development
-and values supported by the consortium. 
+and values supported by the consortium. It seems that `Rcpp`'s choice of using the GPL license is too 
+restrictive in some settings. 
 
 In addition to blog posts on the consortium blog and article in a venue such as the R Journal for broad exposure, 
 it makes sense to have a dedicated blog to document progress or highlight specific features being developed. We'll probably 
@@ -349,6 +358,8 @@ Jeff Bezanson, Stefan Karpinski, Viral B. Shah, Alan Edelman. 2012. Julia: A fas
 Dirk Eddelbuettel, and Romain François. 2011. Rcpp: Seamless R and C++ Integration. *Journal of Statistical Software* 40 (8): 1–18. http://www.jstatsoft.org/v40/i08/.
 
 Rich FitzJohn. 2015. Code-generation Wrapping C++ Classes as R6 Classes. 
+
+Romain François, Kevin Ushey and John Chambers. 2014. Rcpp11: R and C++11. https://github.com/Rcpp11/Rcpp11
 
 Duncan Murdoch, Uwe Ligges, Qiang Kou, Kevin Ushey, JJ Allaire, Avraham Adler and Jeroen Ooms. 2016.
 Building R for Windows with the new gcc 4.9.3 toolchain. https://github.com/rwinlib/r-base#readme
