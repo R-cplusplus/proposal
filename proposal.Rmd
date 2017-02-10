@@ -42,7 +42,9 @@ The completed modernization of the `Rtools` (Murdoch, Ligges, Kou, Ushey, Allair
 suite for windows set an important milestone about 
 availability of modern C++ standards. When developping modern R packages using C++ code, we can now 
 safely assume C++11. Furthermore, transitionning from C++11 to more recent versions should 
-be less of a struggle. 
+be less of a struggle. There are still some platforms that don't provide native support for modern standards, 
+but compilers can generally be installed as opt-in compilers, and I don't think it is a good idea 
+to allow our community to be taken hostage 
 
 Backwards compatibility with C++98 may initially perceived as a good feature, but in effect it is
 our belief that it is in fact a curse in disguise. It forces developpers of the R/C++ bridge as well 
@@ -76,7 +78,8 @@ codebase are involved.
   - The version of `Rcpp` on CRAN, used i.e. to compile binary versions of the package
   - The version of `Rcpp` on the user's machine
   
-When these 3 versions are the same, everything works fine. When they start to differ, dealing with  complicated binary incompatibility problems start to happen. Package developpers
+When these 3 versions are the same, everything works fine. When they start to differ, dealing with  
+complicated binary incompatibility problems start to happen. Package developpers
 have used various degrees of safeguards to limit the issue, for example always depend on the 
 latest version of `Rcpp` but this is far from fullproof. 
 
@@ -130,6 +133,7 @@ travis (or similar continuous integration systems) need to first build `Rcpp`, w
 too much time, some of which being used to build components of `Rcpp` that are not relevant 
 to the target package. Embedding the relevant subset of the codebase within the package
 takes care of this. 
+
 
 Plan
 ====
@@ -260,6 +264,13 @@ The most important part, and the one we must absolutely get right, is the distri
 the code. It should be simple enough so that it does not get in the way. It should be easy 
 to switch from one version of the api to another. Doing this right reduces the risk 
 of packages using old version of the code base for wrong reasons. 
+
+Because the api will be redesigned, we cannot guarantee compatibility with the existing `Rcpp` interface, 
+transitionning from one implementation to the other will have to be based on documentation of
+differences. Furthermore we cannot guarantee, at least in the project's infancy 
+full compatibility between different versions. We aim to achieve flextability, i.e. a comprimse
+between flexibility and stability. However, with the embedding design, package authors are not forced to upgrade, 
+they can keep the version of the api they've tested against. 
 
 Help requested
 ==============
