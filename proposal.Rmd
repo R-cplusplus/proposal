@@ -285,8 +285,10 @@ of development time.
 Acknowledgements
 ================
 
-I would like to thank my colleagues Diane Beldame and Vincent Guyader for allowing me to focus some of my work time
-to this project and encouraging me to go forward with this proposal. 
+I would like to thank ThinkR for believing in the project, and allowing me to dedicate it some of my work time, 
+and my colleagues Diane Beldame and Vincent Guyader for encouraging me to go forward with this proposal. 
+
+I would like to thank Gabor Csardi, Jeroen Ooms and Kirill Müller for their constructive feedback on this proposal. 
 
 Dissemination
 =============
@@ -313,9 +315,11 @@ as a freelancer for 8 years, and as a Consulting Datactive for ThinkR since Feb 
 in 221B Baker Street, however we are based in France, where every street is Baker Street. 
 
 My interest for connecting R and C++ is not new. I have been involved in the development of the current
-solution, originally inspired from the design of `rJava` (Urbanek 2016). I have been heavily involved 
-in designing the fundamental principles of what `Rcpp` is now. Nowadays its maintainership is centered on backwards 
-compatibility whereas there is room for (perhaps disruptive) innovation and redesign. 
+solution, originally inspired from the design of `rJava` (Urbanek 2016). Nowadays `Rcpp`'s maintainership 
+is centered on backwards compatibility and stability, and I don't dispute the value of this choice from
+the Rcpp Core Team. I however believe that there is room for (perhaps disruptive) innovation and redesign. 
+As an author of `Rcpp` and one of its top historical contributors, I can leverage my experience and knowledge 
+to design the next generation of an R/C++ bridge. 
 
 Aside from my consulting and training responsabilities at ThinkR, I have a dedicated portion of my time 
 devoted to the developpment of open source solutions. This project of modernization of the R/C++
